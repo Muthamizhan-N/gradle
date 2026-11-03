@@ -1,0 +1,48 @@
+---
+- name: Deploy Simple Web Application Locally
+  hosts: webservers
+  become: yes
+
+  tasks:
+
+    - name: Update package repository
+      apt:
+        update_cache: yes
+
+    - name: Install Apache
+      apt:
+        name: apache2
+        state: present
+
+    - name: Start Apache service
+      service:
+        name: apache2
+        state: started
+        enabled: yes
+
+    - name: Create HTML web application
+      copy:
+        content: |
+          <html>
+          <head>
+            <title>My Web Application</title>
+          </head>
+          <body>
+            <h1>Welcome to My Web Application!</h1>
+            <h2>Successfully Deployed Using Ansible</h2>
+            <p>This application is running locally.</p>
+          </body>
+          </html>
+        dest: /var/www/html/index.html
+
+
+
+
+        inventory.ini
+        [webservers]
+localhost ansible_connection=local
+
+
+ansible-playbook -i inventory.ini web.yml --ask-become-pass
+
+

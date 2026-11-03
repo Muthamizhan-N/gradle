@@ -1,0 +1,41 @@
+# Step 1: Update the Ubuntu package list
+sudo apt update
+
+# Step 2: Upgrade installed packages
+sudo apt upgrade -y
+
+# Step 3: Install Java 21 and fontconfig
+sudo apt install fontconfig openjdk-21-jre -y
+
+# Step 4: Verify Java installation
+java -version
+
+# Step 5: Create the directory for APT repository keys
+sudo mkdir -p /etc/apt/keyrings
+
+# Step 6: Download the Jenkins repository signing key
+sudo wget -O /etc/apt/keyrings/jenkins-keyring.asc https://pkg.jenkins.io/debian-stable/jenkins.io-2026.key
+
+# Step 7: Add the Jenkins repository to Ubuntu
+echo "deb [signed-by=/etc/apt/keyrings/jenkins-keyring.asc] https://pkg.jenkins.io/debian-stable binary/" | sudo tee /etc/apt/sources.list.d/jenkins.list > /dev/null
+
+# Step 8: Update package information
+sudo apt update
+
+# Step 9: Install Jenkins
+sudo apt install jenkins -y
+
+# Step 10: Start the Jenkins service
+sudo systemctl start jenkins
+
+# Step 11: Enable Jenkins to start automatically during boot
+sudo systemctl enable jenkins
+
+# Step 12: Check Jenkins service status
+sudo systemctl status jenkins
+
+# Step 13: Display the initial Jenkins admin password
+sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+
+# Step 14: Open Jenkins in your browser
+# URL: http://localhost:8080
