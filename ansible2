@@ -1,0 +1,37 @@
+nano inventory 
+
+
+[web]
+localhost ansible_connection=local
+
+ansible-galaxy init webserver
+
+nano webserver/tasks/main.yml
+
+---
+# tasks file for webserver
+- name: Install Apache
+  apt:
+    name: apache2
+    state: present
+    update_cache: yes
+- name: Start Apache
+  service:
+    name: apache2
+    state: started
+
+
+nano playbook.yml
+
+---
+- name: Configure Web Server
+  hosts: web
+  become: yes
+
+  roles:
+    - webserver
+
+ansible-playbook -i inventory playbook.yml -k -K
+
+
+sudo systemctl status apache2

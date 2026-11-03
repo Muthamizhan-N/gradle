@@ -1,3 +1,5 @@
+nano web.yml 
+
 ---
 - name: Deploy Simple Web Application Locally
   hosts: webservers
@@ -38,8 +40,9 @@
 
 
 
-        inventory.ini
-        [webservers]
+inventory.ini
+
+[webservers]
 localhost ansible_connection=local
 
 
