@@ -1,0 +1,21 @@
+sudo apt update
+
+sudo apt install ca-certificates gupg wget apt-transport-https
+
+sudo install -m 0755 -d /etc/apt/keyrings
+
+wget -qO- https://downloads.opennebula.io/repo/repo2.key | gpg --dearmor | sudo tee /etc/apt/keyrings/opennebula.gpg > /dev/null
+
+sudo chmod 0644 /etc/apt/keyrings/opennebula.gpg
+
+echo 'deb [signed-by=/etc/apt/keyrings/opennebula.gpg] https://downloads.opennebula.io/repo/7.2/Ubuntu/24.04 stable opennebula' | sudo tee /etc/apt/sources.list.d/opennebula.list > /dev/null
+
+sudo apt update
+
+sudo apt install opennebula opennebula-fireedge opennebula-flow opennebula-gate -y
+
+sudo systemctl start opennebula opennebula-fireedge
+
+sudo cat /var/lib/one/.one/one_auth
+
+localhost:2616

@@ -1,0 +1,15 @@
+sudo systemctl enable --now docker
+
+sudo docker pull apache/hadoop:3.5.0
+
+mkdir -p ~/hadoop/input
+
+echo "hello hadoop" > ~/hadoop/input/file.txt
+
+sudo chmod -R 777 ~/hadoop
+
+sudo docker run --rm -v ~/hadoop:/work apache/hadoop:3.5.0 bash -c 'hadoop jar /opt/hadoop/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.5.0.jar wordcount /work/input /work/output'
+
+cat ~/hadoop/output/part-r-00000
+
+sudo rm -rf ~/hadoop/output
